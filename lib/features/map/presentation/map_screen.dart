@@ -234,6 +234,7 @@ class _MapScreenState extends State<MapScreen> {
             icon: Icons.analytics_outlined,
             onTap: () => showModalBottomSheet(
               context: context,
+              isScrollControlled: true,
               backgroundColor: Colors.transparent,
               builder: (context) => const railpulse.PerformanceOverlay(),
             ),
