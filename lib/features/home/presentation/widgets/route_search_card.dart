@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
+import 'package:railpulse/core/navigation/navigation_bloc.dart';
 import 'package:railpulse/core/theme/app_colors.dart';
 import 'package:railpulse/features/home/presentation/bloc/search_bloc.dart';
 
@@ -59,7 +60,12 @@ class _RouteSearchCardState extends State<RouteSearchCard> {
   Widget build(BuildContext context) {
     return BlocListener<SearchBloc, SearchState>(
       listener: (context, state) {
-        if (state is SearchSuccess) context.go('/map');
+        if (state is SearchSuccess) {
+          // Switch tab to Map (index 1) in the BLoC
+          context.read<NavigationBloc>().add(const NavigationTabChanged(1));
+          // Physically move to the map route
+          context.go('/map');
+        }
       },
       child: Container(
         padding: const EdgeInsets.all(24),
@@ -134,7 +140,7 @@ class _RouteSearchCardState extends State<RouteSearchCard> {
               elevation: 0,
             ),
             child: state is SearchLoading 
-              ? const CircularProgressIndicator(color: Colors.white)
+              ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
               : const Text('SEARCH TRAINS', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
           ),
         );
