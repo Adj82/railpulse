@@ -4,6 +4,7 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:railpulse/core/theme/app_colors.dart';
 import 'package:railpulse/core/services/train_service.dart';
+import 'package:railpulse/features/map/presentation/widgets/performance_overlay.dart';
 import 'package:railpulse/features/tracking/presentation/bloc/tracking_bloc.dart';
 
 class MapScreen extends StatefulWidget {
@@ -189,7 +190,14 @@ class _MapScreenState extends State<MapScreen> {
             onTap: () => setState(() => _followTrain = true),
           ),
           const SizedBox(height: 12),
-          _MapButton(icon: Icons.analytics_outlined, onTap: () {}),
+          _MapButton(
+            icon: Icons.analytics_outlined,
+            onTap: () => showModalBottomSheet(
+              context: context,
+              backgroundColor: Colors.transparent,
+              builder: (context) => const PerformanceOverlay(),
+            ),
+          ),
         ],
       ),
     );

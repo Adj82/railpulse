@@ -17,7 +17,9 @@ class InsightsScreen extends StatelessWidget {
           children: [
             _buildTrafficSummary(),
             const SizedBox(height: 32),
-            const Text('Network Bottlenecks', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            _buildLiveTerminalBoard(),
+            const SizedBox(height: 32),
+            const Text('Critical Bottlenecks', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
             const SizedBox(height: 16),
             _InsightCard(
               title: 'New Delhi (NDLS)',
@@ -34,16 +36,7 @@ class InsightsScreen extends StatelessWidget {
               color: AppColors.warning,
               tag: 'WEATHER',
             ),
-            const SizedBox(height: 32),
-            const Text('Efficiency Optimization', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-            const SizedBox(height: 16),
-            _InsightCard(
-              title: 'Route Optimizer',
-              description: 'Taking the Metro from NDLS to Shivaji Stadium will save you 15 mins today.',
-              icon: Icons.auto_awesome,
-              color: AppColors.primary,
-              tag: 'SUGGESTION',
-            ),
+            const SizedBox(height: 100),
           ],
         ),
       ),
@@ -78,6 +71,50 @@ class InsightsScreen extends StatelessWidget {
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildLiveTerminalBoard() {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Terminal Arrivals (NDLS)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 16),
+        Container(
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.black.withOpacity(0.02),
+            borderRadius: BorderRadius.circular(20),
+            border: Border.all(color: Colors.black12),
+          ),
+          child: Column(
+            children: [
+              _buildTerminalRow('12002', 'Shatabdi Exp', 'PF 1', 'ON-TIME'),
+              const Divider(height: 24),
+              _buildTerminalRow('12951', 'Rajdhani Exp', 'PF 4', '+12 min', isDelayed: true),
+              const Divider(height: 24),
+              _buildTerminalRow('22415', 'Vande Bharat', 'PF 12', 'ON-TIME'),
+            ],
+          ),
+        ),
+      ],
+    );
+  }
+
+  Widget _buildTerminalRow(String id, String name, String pf, String status, {bool isDelayed = false}) {
+    return Row(
+      children: [
+        Text(id, style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold, color: AppColors.primary)),
+        const SizedBox(width: 12),
+        Expanded(child: Text(name, style: const TextStyle(fontWeight: FontWeight.w600))),
+        Text(pf, style: const TextStyle(color: AppColors.textSecondary)),
+        const SizedBox(width: 12),
+        Text(status, style: TextStyle(
+          color: isDelayed ? AppColors.error : AppColors.success,
+          fontWeight: FontWeight.bold,
+          fontSize: 12,
+        )),
+      ],
     );
   }
 
