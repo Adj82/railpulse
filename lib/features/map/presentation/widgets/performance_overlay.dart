@@ -16,10 +16,15 @@ class PerformanceOverlay extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text('Sectional Performance', style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+          const Text(
+            'Sectional Performance',
+            style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          ),
           const SizedBox(height: 8),
-          const Text('Real-time efficiency metrics for the current track section.', 
-            style: TextStyle(color: AppColors.textSecondary, fontSize: 13)),
+          const Text(
+            'Real-time efficiency metrics for the current track section.',
+            style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
+          ),
           const SizedBox(height: 24),
           _buildMetricRow('Track Integrity', '99.8%', AppColors.success),
           _buildMetricRow('Signal Uptime', '100%', AppColors.success),
@@ -28,8 +33,14 @@ class PerformanceOverlay extends StatelessWidget {
           const SizedBox(height: 24),
           const Divider(),
           const SizedBox(height: 12),
-          const Text('ML Insight: Track condition is optimal for max speed (130 km/h). No speed restrictions ahead.',
-            style: TextStyle(fontSize: 12, fontStyle: FontStyle.italic, color: AppColors.textSecondary)),
+          const Text(
+            'ML Insight: Track condition is optimal for max speed (130 km/h). No speed restrictions ahead.',
+            style: TextStyle(
+              fontSize: 12,
+              fontStyle: FontStyle.italic,
+              color: AppColors.textSecondary,
+            ),
+          ),
           const SizedBox(height: 24),
           SizedBox(
             width: double.infinity,
@@ -38,9 +49,17 @@ class PerformanceOverlay extends StatelessWidget {
               onPressed: () => Navigator.pop(context),
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.secondary,
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
               ),
-              child: const Text('CLOSE REPORT', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+              child: const Text(
+                'CLOSE REPORT',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ),
           ),
         ],
@@ -55,7 +74,14 @@ class PerformanceOverlay extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
           Text(label, style: const TextStyle(fontWeight: FontWeight.w500)),
-          Text(val, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 16)),
+          Text(
+            val,
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.bold,
+              fontSize: 16,
+            ),
+          ),
         ],
       ),
     );

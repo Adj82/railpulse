@@ -1,30 +1,27 @@
-// This is a basic Flutter widget test.
-//
-// To perform an interaction with a widget in your test, use the WidgetTester
-// utility in the flutter_test package. For example, you can send tap and scroll
-// gestures. You can also use WidgetTester to find child widgets in the widget
-// tree, read text, and verify that the values of widget properties are correct.
-
-import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-import 'package:railpulse/main.dart';
+import 'package:railpulse/features/eta_tracking/data/models/eta_response.dart';
+import 'package:railpulse/features/eta_tracking/data/services/eta_service.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build our app and trigger a frame.
-    await tester.pumpWidget(const MyApp());
-
-    // Verify that our counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
-
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
-
-    // Verify that our counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+  test('demo prediction provides ordered confidence intervals', () async {
+    final EtaResponse response = await MockEtaService().fetchEta('12345');
+    expect(response.stations, isNotEmpty);
+    for (final station in response.stations) {
+      expect(
+        station.p10.isAfter(station.scheduledArrival) ||
+            station.p10.isAtSameMomentAs(station.scheduledArrival),
+        isTrue,
+      );
+      expect(
+        station.p50.isAfter(station.p10) ||
+            station.p50.isAtSameMomentAs(station.p10),
+        isTrue,
+      );
+      expect(
+        station.p90.isAfter(station.p50) ||
+            station.p90.isAtSameMomentAs(station.p50),
+        isTrue,
+      );
+    }
   });
 }

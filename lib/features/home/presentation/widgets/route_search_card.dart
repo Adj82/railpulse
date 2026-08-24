@@ -18,21 +18,31 @@ class _RouteSearchCardState extends State<RouteSearchCard> {
   String _destination = 'Lucknow NR';
 
   final List<String> _stations = [
-    'New Delhi (NDLS)', 'Lucknow NR', 'Mumbai Central', 'Chennai Central',
-    'Kolkata Howrah', 'Bangalore City', 'Hyderabad Deccan', 'Pune Jn'
+    'New Delhi (NDLS)',
+    'Lucknow NR',
+    'Mumbai Central',
+    'Chennai Central',
+    'Kolkata Howrah',
+    'Bangalore City',
+    'Hyderabad Deccan',
+    'Pune Jn',
   ];
 
   void _showStationPicker(bool isOrigin) {
     showModalBottomSheet(
       context: context,
-      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.vertical(top: Radius.circular(30))),
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.vertical(top: Radius.circular(30)),
+      ),
       builder: (context) => Container(
         padding: const EdgeInsets.all(24),
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text(isOrigin ? 'Select Origin' : 'Select Destination', 
-              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            Text(
+              isOrigin ? 'Select Origin' : 'Select Destination',
+              style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 20),
             Flexible(
               child: ListView.builder(
@@ -42,8 +52,10 @@ class _RouteSearchCardState extends State<RouteSearchCard> {
                   title: Text(_stations[index]),
                   onTap: () {
                     setState(() {
-                      if (isOrigin) _origin = _stations[index];
-                      else _destination = _stations[index];
+                      if (isOrigin)
+                        _origin = _stations[index];
+                      else
+                        _destination = _stations[index];
                     });
                     Navigator.pop(context);
                   },
@@ -73,7 +85,11 @@ class _RouteSearchCardState extends State<RouteSearchCard> {
           color: Colors.white,
           borderRadius: BorderRadius.circular(25),
           boxShadow: [
-            BoxShadow(color: AppColors.secondary.withOpacity(0.05), blurRadius: 20, offset: const Offset(0, 10)),
+            BoxShadow(
+              color: AppColors.secondary.withOpacity(0.05),
+              blurRadius: 20,
+              offset: const Offset(0, 10),
+            ),
           ],
         ),
         child: Column(
@@ -90,7 +106,11 @@ class _RouteSearchCardState extends State<RouteSearchCard> {
                       color: AppColors.primary.withOpacity(0.1),
                       shape: BoxShape.circle,
                     ),
-                    child: const Icon(LucideIcons.repeat, size: 16, color: AppColors.primary),
+                    child: const Icon(
+                      LucideIcons.repeat,
+                      size: 16,
+                      color: AppColors.primary,
+                    ),
                   ),
                   const Expanded(child: Divider(color: Colors.black12)),
                 ],
@@ -110,13 +130,29 @@ class _RouteSearchCardState extends State<RouteSearchCard> {
       onTap: () => _showStationPicker(isOrigin),
       child: Row(
         children: [
-          Icon(isOrigin ? LucideIcons.mapPin : LucideIcons.navigation2, color: AppColors.primary, size: 20),
+          Icon(
+            isOrigin ? LucideIcons.mapPin : LucideIcons.navigation2,
+            color: AppColors.primary,
+            size: 20,
+          ),
           const SizedBox(width: 16),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(isOrigin ? 'From' : 'To', style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
-              Text(isOrigin ? _origin : _destination, style: const TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
+              Text(
+                isOrigin ? 'From' : 'To',
+                style: const TextStyle(
+                  color: AppColors.textSecondary,
+                  fontSize: 12,
+                ),
+              ),
+              Text(
+                isOrigin ? _origin : _destination,
+                style: const TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
             ],
           ),
         ],
@@ -132,16 +168,34 @@ class _RouteSearchCardState extends State<RouteSearchCard> {
           height: 55,
           child: ElevatedButton(
             onPressed: () {
-              context.read<SearchBloc>().add(PerformSearch(from: _origin, to: _destination));
+              context.read<SearchBloc>().add(
+                PerformSearch(from: _origin, to: _destination),
+              );
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: AppColors.secondary,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16),
+              ),
               elevation: 0,
             ),
-            child: state is SearchLoading 
-              ? const SizedBox(width: 20, height: 20, child: CircularProgressIndicator(color: Colors.white, strokeWidth: 2))
-              : const Text('SEARCH TRAINS', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, letterSpacing: 1.2)),
+            child: state is SearchLoading
+                ? const SizedBox(
+                    width: 20,
+                    height: 20,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
+                      strokeWidth: 2,
+                    ),
+                  )
+                : const Text(
+                    'SEARCH TRAINS',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
           ),
         );
       },

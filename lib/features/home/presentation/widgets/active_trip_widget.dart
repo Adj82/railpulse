@@ -13,7 +13,7 @@ class ActiveTripWidget extends StatelessWidget {
     return BlocBuilder<TrackingBloc, TrackingState>(
       builder: (context, state) {
         final telemetry = state is TrackingLoaded ? state.telemetry : null;
-        
+
         return InkWell(
           onTap: () => context.push('/tracking'),
           child: Container(
@@ -22,7 +22,11 @@ class ActiveTripWidget extends StatelessWidget {
               color: Colors.white,
               borderRadius: BorderRadius.circular(20),
               boxShadow: [
-                BoxShadow(color: AppColors.secondary.withOpacity(0.05), blurRadius: 15, offset: const Offset(0, 5)),
+                BoxShadow(
+                  color: AppColors.secondary.withOpacity(0.05),
+                  blurRadius: 15,
+                  offset: const Offset(0, 5),
+                ),
               ],
             ),
             child: Row(
@@ -34,7 +38,11 @@ class ActiveTripWidget extends StatelessWidget {
                     color: AppColors.success.withOpacity(0.1),
                     shape: BoxShape.circle,
                   ),
-                  child: const Icon(LucideIcons.train, color: AppColors.success, size: 24),
+                  child: const Icon(
+                    LucideIcons.train,
+                    color: AppColors.success,
+                    size: 24,
+                  ),
                 ),
                 const SizedBox(width: 16),
                 Expanded(
@@ -43,19 +51,28 @@ class ActiveTripWidget extends StatelessWidget {
                     children: [
                       const Text(
                         '12951 • Rajdhani Express',
-                        style: TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 16,
+                        ),
                       ),
                       const SizedBox(height: 4),
                       Text(
-                        telemetry != null 
-                          ? 'Approaching ${telemetry.nextStation} • ${telemetry.speed.toInt()} km/h'
-                          : 'Live Tracking Active',
-                        style: const TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                        telemetry != null
+                            ? 'Approaching ${telemetry.nextStation} • ${telemetry.speed.toInt()} km/h'
+                            : 'Live Tracking Active',
+                        style: const TextStyle(
+                          color: AppColors.textSecondary,
+                          fontSize: 13,
+                        ),
                       ),
                     ],
                   ),
                 ),
-                const Icon(LucideIcons.chevronRight, color: AppColors.textSecondary),
+                const Icon(
+                  LucideIcons.chevronRight,
+                  color: AppColors.textSecondary,
+                ),
               ],
             ),
           ),

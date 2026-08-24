@@ -38,7 +38,12 @@ class _TrainInputScreenState extends ConsumerState<TrainInputScreen> {
     try {
       final response = await ref.read(etaServiceProvider).fetchEta(input);
       if (!mounted) return;
-      Navigator.push(context, MaterialPageRoute(builder: (context) => EtaResultScreen(etaResponse: response)));
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => EtaResultScreen(etaResponse: response),
+        ),
+      );
     } catch (e) {
       setState(() => _errorMessage = 'Failed to fetch ETA');
     } finally {
@@ -61,17 +66,32 @@ class _TrainInputScreenState extends ConsumerState<TrainInputScreen> {
               decoration: BoxDecoration(
                 color: Colors.white,
                 borderRadius: BorderRadius.circular(30),
-                boxShadow: [BoxShadow(color: AppColors.secondary.withOpacity(0.05), blurRadius: 30)],
+                boxShadow: [
+                  BoxShadow(
+                    color: AppColors.secondary.withOpacity(0.05),
+                    blurRadius: 30,
+                  ),
+                ],
               ),
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  const Icon(Icons.analytics, size: 64, color: AppColors.primary),
+                  const Icon(
+                    Icons.analytics,
+                    size: 64,
+                    color: AppColors.primary,
+                  ),
                   const SizedBox(height: 24),
-                  const Text('AI Predictive ETA', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                  const Text(
+                    'AI Predictive ETA',
+                    style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold),
+                  ),
                   const SizedBox(height: 8),
-                  const Text('Enter your train number for ML-based timing predictions.', 
-                    textAlign: TextAlign.center, style: TextStyle(color: AppColors.textSecondary)),
+                  const Text(
+                    'Enter your train number for ML-based timing predictions.',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(color: AppColors.textSecondary),
+                  ),
                   const SizedBox(height: 32),
                   TextField(
                     controller: _controller,
@@ -80,7 +100,9 @@ class _TrainInputScreenState extends ConsumerState<TrainInputScreen> {
                       labelText: 'Train Number',
                       hintText: 'e.g. 12345',
                       errorText: _errorMessage,
-                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(15),
+                      ),
                     ),
                   ),
                   const SizedBox(height: 24),
@@ -91,11 +113,19 @@ class _TrainInputScreenState extends ConsumerState<TrainInputScreen> {
                       onPressed: _isLoading ? null : _submit,
                       style: ElevatedButton.styleFrom(
                         backgroundColor: AppColors.primary,
-                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(15),
+                        ),
                       ),
-                      child: _isLoading 
-                        ? const CircularProgressIndicator(color: Colors.white)
-                        : const Text('GET PROJECTIONS', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                      child: _isLoading
+                          ? const CircularProgressIndicator(color: Colors.white)
+                          : const Text(
+                              'GET PROJECTIONS',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
                     ),
                   ),
                 ],

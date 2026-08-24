@@ -8,13 +8,13 @@ class TrainTelemetry {
   final String trainNumber;
   final String trainName;
   final double speed;
-  final double progress; 
+  final double progress;
   final String currentStation;
   final String nextStation;
   final int delayMinutes;
   final LatLng position;
   final List<LatLng> routePoints;
-  
+
   // SIH PS26028 specific telemetry
   final SignalAspect signalStatus;
   final String? externalCondition; // e.g. "Heavy Fog"
@@ -38,12 +38,17 @@ class TrainTelemetry {
 
 class TrainService {
   final _random = Random();
-  
-  final List<LatLng> _ndlsToKota = [
-    const LatLng(28.6139, 77.2090), // NDLS
-    const LatLng(28.2045, 77.0256), // Mathura
-    const LatLng(27.4924, 77.6737), // Agra
-    const LatLng(25.2138, 75.8648), // Kota
+
+  // Demo corridor mirrors the SIH plan: Howrah - New Delhi via Grand Chord.
+  final List<LatLng> _howrahToDelhi = [
+    const LatLng(22.5958, 88.2636), // Howrah
+    const LatLng(23.2324, 87.8615), // Barddhaman
+    const LatLng(23.7957, 86.4304), // Dhanbad
+    const LatLng(24.7914, 85.0002), // Gaya
+    const LatLng(25.2739, 83.1197), // DDU
+    const LatLng(25.4358, 81.8463), // Prayagraj
+    const LatLng(26.4521, 80.3319), // Kanpur
+    const LatLng(28.6412, 77.2180), // New Delhi
   ];
 
   Stream<TrainTelemetry> getLiveTelemetry(String trainNumber) async* {
@@ -52,9 +57,9 @@ class TrainService {
       await Future.delayed(const Duration(seconds: 1));
       progress += 0.002;
       if (progress > 1.0) progress = 0.0;
-      
-      final pos = _interpolatePosition(_ndlsToKota, progress);
-      
+
+      final pos = _interpolatePosition(_howrahToDelhi, progress);
+
       // Simulate dynamic signal status based on progress
       SignalAspect signal = SignalAspect.green;
       if (progress > 0.28 && progress < 0.32) signal = SignalAspect.yellow;
@@ -62,14 +67,22 @@ class TrainService {
 
       yield TrainTelemetry(
         trainNumber: trainNumber,
-        trainName: 'Rajdhani Express',
-        speed: signal == SignalAspect.red ? 0.0 : (signal == SignalAspect.yellow ? 30.0 : 95.0 + _random.nextDouble() * 25),
+        trainName: 'Howrah Rajdhani Express',
+        speed: signal == SignalAspect.red
+            ? 0.0
+            : (signal == SignalAspect.yellow
+                  ? 30.0
+                  : 95.0 + _random.nextDouble() * 25),
         progress: progress,
-        currentStation: progress < 0.3 ? 'New Delhi' : (progress < 0.7 ? 'Agra' : 'Kota'),
-        nextStation: progress < 0.3 ? 'Agra' : (progress < 0.7 ? 'Kota' : 'Mumbai'),
+        currentStation: progress < 0.3
+            ? 'Howrah'
+            : (progress < 0.7 ? 'Gaya' : 'Kanpur Central'),
+        nextStation: progress < 0.3
+            ? 'Dhanbad'
+            : (progress < 0.7 ? 'Prayagraj' : 'New Delhi'),
         delayMinutes: 10 + _random.nextInt(10),
         position: pos,
-        routePoints: _ndlsToKota,
+        routePoints: _howrahToDelhi,
         signalStatus: signal,
         externalCondition: progress > 0.5 ? 'Moderate Fog' : null,
         recoveryBuffer: '8 mins recovery potential',

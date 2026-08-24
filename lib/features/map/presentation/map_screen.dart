@@ -4,7 +4,8 @@ import 'package:flutter_map/flutter_map.dart';
 import 'package:latlong2/latlong.dart';
 import 'package:railpulse/core/theme/app_colors.dart';
 import 'package:railpulse/core/services/train_service.dart';
-import 'package:railpulse/features/map/presentation/widgets/performance_overlay.dart';
+import 'package:railpulse/features/map/presentation/widgets/performance_overlay.dart'
+    as railpulse;
 import 'package:railpulse/features/tracking/presentation/bloc/tracking_bloc.dart';
 
 class MapScreen extends StatefulWidget {
@@ -41,8 +42,8 @@ class _MapScreenState extends State<MapScreen> {
               FlutterMap(
                 mapController: _mapController,
                 options: MapOptions(
-                  initialCenter: const LatLng(28.6139, 77.2090),
-                  initialZoom: 10.0,
+                  initialCenter: const LatLng(25.5, 82.4),
+                  initialZoom: 5.0,
                   onMapReady: () => setState(() => _isMapReady = true),
                   onPositionChanged: (pos, hasGesture) {
                     if (hasGesture && _followTrain) {
@@ -52,7 +53,8 @@ class _MapScreenState extends State<MapScreen> {
                 ),
                 children: [
                   TileLayer(
-                    urlTemplate: 'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
+                    urlTemplate:
+                        'https://tile.openstreetmap.org/{z}/{x}/{y}.png',
                     userAgentPackageName: 'com.railpulse.app',
                   ),
                   if (telemetry != null) ...[
@@ -68,24 +70,31 @@ class _MapScreenState extends State<MapScreen> {
                     MarkerLayer(
                       markers: [
                         // Station Markers with Congestion Tooltips
-                        ...telemetry.routePoints.asMap().entries.map((e) => Marker(
-                          point: e.value,
-                          width: 14,
-                          height: 14,
-                          child: Container(
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              shape: BoxShape.circle,
-                              border: Border.all(color: AppColors.secondary, width: 2.5),
+                        ...telemetry.routePoints.asMap().entries.map(
+                          (e) => Marker(
+                            point: e.value,
+                            width: 14,
+                            height: 14,
+                            child: Container(
+                              decoration: BoxDecoration(
+                                color: Colors.white,
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: AppColors.secondary,
+                                  width: 2.5,
+                                ),
+                              ),
                             ),
                           ),
-                        )),
+                        ),
                         // Live Train Marker
                         Marker(
                           point: telemetry.position,
                           width: 90,
                           height: 90,
-                          child: _LiveTrainMarker(signal: telemetry.signalStatus),
+                          child: _LiveTrainMarker(
+                            signal: telemetry.signalStatus,
+                          ),
                         ),
                       ],
                     ),
@@ -123,7 +132,9 @@ class _MapScreenState extends State<MapScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(15),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 15)],
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.08), blurRadius: 15),
+        ],
       ),
       child: const Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -142,7 +153,9 @@ class _MapScreenState extends State<MapScreen> {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(25),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 30)],
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.15), blurRadius: 30),
+        ],
       ),
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -153,15 +166,39 @@ class _MapScreenState extends State<MapScreen> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(telemetry.trainName, style: const TextStyle(fontWeight: FontWeight.w900, fontSize: 18)),
-                    Text('Section: Mathura → Kota', style: TextStyle(color: AppColors.textSecondary, fontSize: 12)),
+                    Text(
+                      telemetry.trainName,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.w900,
+                        fontSize: 18,
+                      ),
+                    ),
+                    Text(
+                      'Section: Howrah → New Delhi',
+                      style: TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 12,
+                      ),
+                    ),
                   ],
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
-                decoration: BoxDecoration(color: AppColors.primary.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
-                child: Text('+${telemetry.delayMinutes}m', style: const TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold)),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 6,
+                ),
+                decoration: BoxDecoration(
+                  color: AppColors.primary.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: Text(
+                  '+${telemetry.delayMinutes}m',
+                  style: const TextStyle(
+                    color: AppColors.primary,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),
@@ -169,7 +206,10 @@ class _MapScreenState extends State<MapScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              _MiniStat(icon: Icons.speed, val: '${telemetry.speed.toInt()} km/h'),
+              _MiniStat(
+                icon: Icons.speed,
+                val: '${telemetry.speed.toInt()} km/h',
+              ),
               _MiniStat(icon: Icons.timer_outlined, val: 'ETA: 21:20'),
               _MiniStat(icon: Icons.route_outlined, val: 'Buff: 8m'),
             ],
@@ -195,7 +235,7 @@ class _MapScreenState extends State<MapScreen> {
             onTap: () => showModalBottomSheet(
               context: context,
               backgroundColor: Colors.transparent,
-              builder: (context) => const PerformanceOverlay(),
+              builder: (context) => const railpulse.PerformanceOverlay(),
             ),
           ),
         ],
@@ -209,10 +249,18 @@ class _Stat extends StatelessWidget {
   const _Stat({required this.label, required this.val});
   @override
   Widget build(BuildContext context) {
-    return Column(children: [
-      Text(val, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-      Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 10)),
-    ]);
+    return Column(
+      children: [
+        Text(
+          val,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16),
+        ),
+        Text(
+          label,
+          style: const TextStyle(color: AppColors.textSecondary, fontSize: 10),
+        ),
+      ],
+    );
   }
 }
 
@@ -222,11 +270,16 @@ class _MiniStat extends StatelessWidget {
   const _MiniStat({required this.icon, required this.val});
   @override
   Widget build(BuildContext context) {
-    return Row(children: [
-      Icon(icon, size: 14, color: AppColors.textSecondary),
-      const SizedBox(width: 6),
-      Text(val, style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold)),
-    ]);
+    return Row(
+      children: [
+        Icon(icon, size: 14, color: AppColors.textSecondary),
+        const SizedBox(width: 6),
+        Text(
+          val,
+          style: const TextStyle(fontSize: 12, fontWeight: FontWeight.bold),
+        ),
+      ],
+    );
   }
 }
 
@@ -246,7 +299,10 @@ class _LiveTrainMarker extends StatelessWidget {
         _RippleEffect(color: signalColor),
         Container(
           padding: const EdgeInsets.all(10),
-          decoration: const BoxDecoration(color: AppColors.secondary, shape: BoxShape.circle),
+          decoration: const BoxDecoration(
+            color: AppColors.secondary,
+            shape: BoxShape.circle,
+          ),
           child: const Icon(Icons.train, color: Colors.white, size: 24),
         ),
       ],
@@ -261,18 +317,24 @@ class _RippleEffect extends StatefulWidget {
   State<_RippleEffect> createState() => _RippleEffectState();
 }
 
-class _RippleEffectState extends State<_RippleEffect> with SingleTickerProviderStateMixin {
+class _RippleEffectState extends State<_RippleEffect>
+    with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   @override
   void initState() {
     super.initState();
-    _controller = AnimationController(vsync: this, duration: const Duration(seconds: 2))..repeat();
+    _controller = AnimationController(
+      vsync: this,
+      duration: const Duration(seconds: 2),
+    )..repeat();
   }
+
   @override
   void dispose() {
     _controller.dispose();
     super.dispose();
   }
+
   @override
   Widget build(BuildContext context) {
     return ScaleTransition(
@@ -296,7 +358,11 @@ class _MapButton extends StatelessWidget {
   final IconData icon;
   final bool isSelected;
   final VoidCallback onTap;
-  const _MapButton({required this.icon, this.isSelected = false, required this.onTap});
+  const _MapButton({
+    required this.icon,
+    this.isSelected = false,
+    required this.onTap,
+  });
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
@@ -307,9 +373,14 @@ class _MapButton extends StatelessWidget {
         decoration: BoxDecoration(
           color: isSelected ? AppColors.primary : Colors.white,
           borderRadius: BorderRadius.circular(15),
-          boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10)],
+          boxShadow: [
+            BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10),
+          ],
         ),
-        child: Icon(icon, color: isSelected ? Colors.white : AppColors.textPrimary),
+        child: Icon(
+          icon,
+          color: isSelected ? Colors.white : AppColors.textPrimary,
+        ),
       ),
     );
   }

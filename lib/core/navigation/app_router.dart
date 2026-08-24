@@ -7,8 +7,12 @@ import 'package:railpulse/features/insights/presentation/insights_screen.dart';
 import 'package:railpulse/features/tracking/presentation/train_tracking_screen.dart';
 import 'package:railpulse/features/eta_tracking/presentation/screens/train_input_screen.dart';
 
-final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'root');
-final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>(debugLabel: 'shell');
+final GlobalKey<NavigatorState> _rootNavigatorKey = GlobalKey<NavigatorState>(
+  debugLabel: 'root',
+);
+final GlobalKey<NavigatorState> _shellNavigatorKey = GlobalKey<NavigatorState>(
+  debugLabel: 'shell',
+);
 
 final appRouter = GoRouter(
   navigatorKey: _rootNavigatorKey,
@@ -20,14 +24,8 @@ final appRouter = GoRouter(
         return NavigationShell(child: child);
       },
       routes: [
-        GoRoute(
-          path: '/',
-          builder: (context, state) => const HomeScreen(),
-        ),
-        GoRoute(
-          path: '/map',
-          builder: (context, state) => const MapScreen(),
-        ),
+        GoRoute(path: '/', builder: (context, state) => const HomeScreen()),
+        GoRoute(path: '/map', builder: (context, state) => const MapScreen()),
         GoRoute(
           path: '/insights',
           builder: (context, state) => const InsightsScreen(),

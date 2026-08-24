@@ -57,10 +57,20 @@ class HomeScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Foggy Conditions near Kanpur', 
-                  style: TextStyle(fontWeight: FontWeight.bold, color: AppColors.accentBlue)),
-                Text('Slight delays expected on North-bound routes.', 
-                  style: TextStyle(fontSize: 12, color: AppColors.textSecondary)),
+                Text(
+                  'Foggy Conditions near Kanpur',
+                  style: TextStyle(
+                    fontWeight: FontWeight.bold,
+                    color: AppColors.accentBlue,
+                  ),
+                ),
+                Text(
+                  'Slight delays expected on North-bound routes.',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: AppColors.textSecondary,
+                  ),
+                ),
               ],
             ),
           ),
@@ -76,36 +86,69 @@ class HomeScreen extends StatelessWidget {
     ];
 
     return Row(
-      children: hubs.map((hub) => Expanded(
-        child: Container(
-          margin: const EdgeInsets.only(right: 12),
-          padding: const EdgeInsets.all(16),
-          decoration: BoxDecoration(
-            color: Colors.white,
-            borderRadius: BorderRadius.circular(20),
-            boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.03), blurRadius: 10)],
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(hub['name']!, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-              const SizedBox(height: 4),
-              Text(hub['dist']!, style: const TextStyle(color: AppColors.textSecondary, fontSize: 12)),
-              const SizedBox(height: 12),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      children: hubs
+          .map(
+            (hub) => Expanded(
+              child: Container(
+                margin: const EdgeInsets.only(right: 12),
+                padding: const EdgeInsets.all(16),
                 decoration: BoxDecoration(
-                  color: hub['status'] == 'Crowded' ? AppColors.error.withOpacity(0.1) : AppColors.success.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(8),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(20),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.03),
+                      blurRadius: 10,
+                    ),
+                  ],
                 ),
-                child: Text(hub['status']!, 
-                  style: TextStyle(fontSize: 10, fontWeight: FontWeight.bold, 
-                    color: hub['status'] == 'Crowded' ? AppColors.error : AppColors.success)),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      hub['name']!,
+                      style: const TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 14,
+                      ),
+                    ),
+                    const SizedBox(height: 4),
+                    Text(
+                      hub['dist']!,
+                      style: const TextStyle(
+                        color: AppColors.textSecondary,
+                        fontSize: 12,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 8,
+                        vertical: 4,
+                      ),
+                      decoration: BoxDecoration(
+                        color: hub['status'] == 'Crowded'
+                            ? AppColors.error.withOpacity(0.1)
+                            : AppColors.success.withOpacity(0.1),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      child: Text(
+                        hub['status']!,
+                        style: TextStyle(
+                          fontSize: 10,
+                          fontWeight: FontWeight.bold,
+                          color: hub['status'] == 'Crowded'
+                              ? AppColors.error
+                              : AppColors.success,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-            ],
-          ),
-        ),
-      )).toList(),
+            ),
+          )
+          .toList(),
     );
   }
 }
@@ -119,8 +162,18 @@ class _SectionHeader extends StatelessWidget {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Text(title, style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
-        const Text('See All', style: TextStyle(color: AppColors.primary, fontWeight: FontWeight.bold, fontSize: 13)),
+        Text(
+          title,
+          style: const TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
+        const Text(
+          'See All',
+          style: TextStyle(
+            color: AppColors.primary,
+            fontWeight: FontWeight.bold,
+            fontSize: 13,
+          ),
+        ),
       ],
     );
   }

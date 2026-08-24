@@ -19,7 +19,10 @@ class NavigationShell extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (context) => NavigationBloc()),
-        BlocProvider(create: (context) => TrackingBloc(TrainService())..add(const StartTracking('12951'))),
+        BlocProvider(
+          create: (context) =>
+              TrackingBloc(TrainService())..add(const StartTracking('12951')),
+        ),
         BlocProvider(create: (context) => SearchBloc()),
       ],
       child: Container(
@@ -63,7 +66,9 @@ class _ModernBottomBar extends StatelessWidget {
                 label: 'Home',
                 isSelected: state.index == 0,
                 onTap: () {
-                  context.read<NavigationBloc>().add(const NavigationTabChanged(0));
+                  context.read<NavigationBloc>().add(
+                    const NavigationTabChanged(0),
+                  );
                   context.go('/');
                 },
               ),
@@ -72,7 +77,9 @@ class _ModernBottomBar extends StatelessWidget {
                 label: 'Map',
                 isSelected: state.index == 1,
                 onTap: () {
-                  context.read<NavigationBloc>().add(const NavigationTabChanged(1));
+                  context.read<NavigationBloc>().add(
+                    const NavigationTabChanged(1),
+                  );
                   context.go('/map');
                 },
               ),
@@ -81,7 +88,9 @@ class _ModernBottomBar extends StatelessWidget {
                 label: 'Tracker',
                 isSelected: state.index == 2,
                 onTap: () {
-                  context.read<NavigationBloc>().add(const NavigationTabChanged(2));
+                  context.read<NavigationBloc>().add(
+                    const NavigationTabChanged(2),
+                  );
                   context.go('/tracker');
                 },
               ),
@@ -90,7 +99,9 @@ class _ModernBottomBar extends StatelessWidget {
                 label: 'Insights',
                 isSelected: state.index == 3,
                 onTap: () {
-                  context.read<NavigationBloc>().add(const NavigationTabChanged(3));
+                  context.read<NavigationBloc>().add(
+                    const NavigationTabChanged(3),
+                  );
                   context.go('/insights');
                 },
               ),
@@ -124,7 +135,9 @@ class _NavItem extends StatelessWidget {
         duration: const Duration(milliseconds: 300),
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 10),
         decoration: BoxDecoration(
-          color: isSelected ? AppColors.primary.withOpacity(0.1) : Colors.transparent,
+          color: isSelected
+              ? AppColors.primary.withOpacity(0.1)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(15),
         ),
         child: Column(

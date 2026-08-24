@@ -21,9 +21,7 @@ class TrainTrackingScreen extends StatelessWidget {
                 padding: EdgeInsets.fromLTRB(24, 8, 24, 24),
                 child: TrackingHeader(),
               ),
-              const Expanded(
-                child: LiveTimeline(),
-              ),
+              const Expanded(child: LiveTimeline()),
             ],
           ),
         ),

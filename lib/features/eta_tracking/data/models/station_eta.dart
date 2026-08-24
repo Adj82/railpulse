@@ -5,7 +5,7 @@ class StationEta {
   final DateTime p10; // Optimistic (ML)
   final DateTime p50; // Median/Expected (ML)
   final DateTime p90; // Pessimistic/Likely (ML)
-  
+
   // SIH PS26028 specific factors
   final String? bottleneckReason; // e.g., "Signal Wait", "Platform Maintenance"
   final int congestionIndex; // 0-100%
@@ -36,7 +36,8 @@ class StationEta {
       bottleneckReason: json['bottleneckReason'] as String?,
       congestionIndex: json['congestionIndex'] as int? ?? 0,
       weatherImpact: json['weatherImpact'] as String?,
-      sectionalSpeedLimit: (json['sectionalSpeedLimit'] as num? ?? 130.0).toDouble(),
+      sectionalSpeedLimit: (json['sectionalSpeedLimit'] as num? ?? 130.0)
+          .toDouble(),
     );
   }
 

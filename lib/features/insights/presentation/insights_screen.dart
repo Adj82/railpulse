@@ -19,11 +19,15 @@ class InsightsScreen extends StatelessWidget {
             const SizedBox(height: 32),
             _buildLiveTerminalBoard(),
             const SizedBox(height: 32),
-            const Text('Critical Bottlenecks', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+            const Text(
+              'Critical Bottlenecks',
+              style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+            ),
             const SizedBox(height: 16),
             _InsightCard(
               title: 'New Delhi (NDLS)',
-              description: 'Platform 1-5 under maintenance. Expect 10min hold for all incoming trains.',
+              description:
+                  'Platform 1-5 under maintenance. Expect 10min hold for all incoming trains.',
               icon: Icons.warning_amber_rounded,
               color: AppColors.error,
               tag: 'CRITICAL',
@@ -31,7 +35,8 @@ class InsightsScreen extends StatelessWidget {
             const SizedBox(height: 16),
             _InsightCard(
               title: 'Kanpur Central',
-              description: 'Heavy fog hold. AI predicts clearing in 45 mins. Dynamic ETA recalculated.',
+              description:
+                  'Heavy fog hold. AI predicts clearing in 45 mins. Dynamic ETA recalculated.',
               icon: Icons.cloudy_snowing,
               color: AppColors.warning,
               tag: 'WEATHER',
@@ -49,14 +54,26 @@ class InsightsScreen extends StatelessWidget {
       decoration: BoxDecoration(
         color: AppColors.secondary,
         borderRadius: BorderRadius.circular(25),
-        boxShadow: [BoxShadow(color: AppColors.secondary.withOpacity(0.3), blurRadius: 20)],
+        boxShadow: [
+          BoxShadow(
+            color: AppColors.secondary.withOpacity(0.3),
+            blurRadius: 20,
+          ),
+        ],
       ),
       child: Column(
         children: [
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Live Network Status', style: TextStyle(color: Colors.white, fontSize: 16, fontWeight: FontWeight.bold)),
+              Text(
+                'Live Network Status',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
               Icon(Icons.online_prediction, color: AppColors.success),
             ],
           ),
@@ -78,7 +95,10 @@ class InsightsScreen extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const Text('Terminal Arrivals (NDLS)', style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
+        const Text(
+          'Terminal Arrivals (NDLS)',
+          style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+        ),
         const SizedBox(height: 16),
         Container(
           padding: const EdgeInsets.all(20),
@@ -91,7 +111,13 @@ class InsightsScreen extends StatelessWidget {
             children: [
               _buildTerminalRow('12002', 'Shatabdi Exp', 'PF 1', 'ON-TIME'),
               const Divider(height: 24),
-              _buildTerminalRow('12951', 'Rajdhani Exp', 'PF 4', '+12 min', isDelayed: true),
+              _buildTerminalRow(
+                '12951',
+                'Rajdhani Exp',
+                'PF 4',
+                '+12 min',
+                isDelayed: true,
+              ),
               const Divider(height: 24),
               _buildTerminalRow('22415', 'Vande Bharat', 'PF 12', 'ON-TIME'),
             ],
@@ -101,19 +127,40 @@ class InsightsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTerminalRow(String id, String name, String pf, String status, {bool isDelayed = false}) {
+  Widget _buildTerminalRow(
+    String id,
+    String name,
+    String pf,
+    String status, {
+    bool isDelayed = false,
+  }) {
     return Row(
       children: [
-        Text(id, style: const TextStyle(fontFamily: 'monospace', fontWeight: FontWeight.bold, color: AppColors.primary)),
+        Text(
+          id,
+          style: const TextStyle(
+            fontFamily: 'monospace',
+            fontWeight: FontWeight.bold,
+            color: AppColors.primary,
+          ),
+        ),
         const SizedBox(width: 12),
-        Expanded(child: Text(name, style: const TextStyle(fontWeight: FontWeight.w600))),
+        Expanded(
+          child: Text(
+            name,
+            style: const TextStyle(fontWeight: FontWeight.w600),
+          ),
+        ),
         Text(pf, style: const TextStyle(color: AppColors.textSecondary)),
         const SizedBox(width: 12),
-        Text(status, style: TextStyle(
-          color: isDelayed ? AppColors.error : AppColors.success,
-          fontWeight: FontWeight.bold,
-          fontSize: 12,
-        )),
+        Text(
+          status,
+          style: TextStyle(
+            color: isDelayed ? AppColors.error : AppColors.success,
+            fontWeight: FontWeight.bold,
+            fontSize: 12,
+          ),
+        ),
       ],
     );
   }
@@ -121,9 +168,19 @@ class InsightsScreen extends StatelessWidget {
   Widget _buildMetric(String val, String label) {
     return Column(
       children: [
-        Text(val, style: const TextStyle(color: Colors.white, fontSize: 20, fontWeight: FontWeight.w900)),
+        Text(
+          val,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 20,
+            fontWeight: FontWeight.w900,
+          ),
+        ),
         const SizedBox(height: 4),
-        Text(label, style: const TextStyle(color: Colors.white60, fontSize: 12)),
+        Text(
+          label,
+          style: const TextStyle(color: Colors.white60, fontSize: 12),
+        ),
       ],
     );
   }
@@ -151,7 +208,9 @@ class _InsightCard extends StatelessWidget {
       decoration: BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.circular(20),
-        boxShadow: [BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 15)],
+        boxShadow: [
+          BoxShadow(color: Colors.black.withOpacity(0.04), blurRadius: 15),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -160,21 +219,47 @@ class _InsightCard extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(8),
-                decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(10)),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(10),
+                ),
                 child: Icon(icon, color: color, size: 18),
               ),
               const SizedBox(width: 12),
-              Text(title, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 15)),
+              Text(
+                title,
+                style: const TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 15,
+                ),
+              ),
               const Spacer(),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                decoration: BoxDecoration(color: color.withOpacity(0.1), borderRadius: BorderRadius.circular(8)),
-                child: Text(tag, style: TextStyle(color: color, fontSize: 10, fontWeight: FontWeight.bold)),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.1),
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: Text(
+                  tag,
+                  style: TextStyle(
+                    color: color,
+                    fontSize: 10,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
               ),
             ],
           ),
           const SizedBox(height: 16),
-          Text(description, style: const TextStyle(color: AppColors.textSecondary, fontSize: 13, height: 1.5)),
+          Text(
+            description,
+            style: const TextStyle(
+              color: AppColors.textSecondary,
+              fontSize: 13,
+              height: 1.5,
+            ),
+          ),
         ],
       ),
     );

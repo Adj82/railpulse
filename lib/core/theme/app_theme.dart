@@ -13,7 +13,8 @@ class AppTheme {
         secondary: AppColors.secondary,
         surface: AppColors.surface,
       ),
-      scaffoldBackgroundColor: Colors.transparent, // Background will be handled by Gradients
+      scaffoldBackgroundColor:
+          Colors.transparent, // Background will be handled by Gradients
       textTheme: GoogleFonts.plusJakartaSansTextTheme().apply(
         bodyColor: AppColors.textPrimary,
         displayColor: AppColors.textPrimary,

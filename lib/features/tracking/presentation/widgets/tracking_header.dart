@@ -20,7 +20,11 @@ class TrackingHeader extends StatelessWidget {
             color: Colors.white,
             borderRadius: BorderRadius.circular(25),
             boxShadow: [
-              BoxShadow(color: AppColors.secondary.withOpacity(0.05), blurRadius: 20, offset: const Offset(0, 10)),
+              BoxShadow(
+                color: AppColors.secondary.withOpacity(0.05),
+                blurRadius: 20,
+                offset: const Offset(0, 10),
+              ),
             ],
           ),
           child: Column(
@@ -34,29 +38,50 @@ class TrackingHeader extends StatelessWidget {
                       children: [
                         Text(
                           telemetry?.trainName ?? '12951 • RAJDHANI EXP',
-                          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 18, letterSpacing: 1),
+                          style: const TextStyle(
+                            fontWeight: FontWeight.bold,
+                            fontSize: 18,
+                            letterSpacing: 1,
+                          ),
                           overflow: TextOverflow.ellipsis,
                         ),
                         const SizedBox(height: 4),
                         const Text(
                           'NDLS → Mumbai Central',
-                          style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                          style: TextStyle(
+                            color: AppColors.textSecondary,
+                            fontSize: 13,
+                          ),
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],
                     ),
                   ),
                   const SizedBox(width: 12),
-                  _buildSignalIndicator(telemetry?.signalStatus ?? SignalAspect.green),
+                  _buildSignalIndicator(
+                    telemetry?.signalStatus ?? SignalAspect.green,
+                  ),
                 ],
               ),
               const SizedBox(height: 24),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  _buildStat(LucideIcons.gauge, '${telemetry?.speed.toInt() ?? 0} km/h', 'Current Speed'),
-                  _buildStat(LucideIcons.mapPin, telemetry?.nextStation ?? 'KOTA JN', 'Next Stop'),
-                  _buildStat(LucideIcons.clock, '+${telemetry?.delayMinutes ?? 15}m Delay', 'ML Prediction'),
+                  _buildStat(
+                    LucideIcons.gauge,
+                    '${telemetry?.speed.toInt() ?? 0} km/h',
+                    'Current Speed',
+                  ),
+                  _buildStat(
+                    LucideIcons.mapPin,
+                    telemetry?.nextStation ?? 'KOTA JN',
+                    'Next Stop',
+                  ),
+                  _buildStat(
+                    LucideIcons.clock,
+                    '+${telemetry?.delayMinutes ?? 15}m Delay',
+                    'ML Prediction',
+                  ),
                 ],
               ),
               if (telemetry?.externalCondition != null) ...[
@@ -74,10 +99,22 @@ class TrackingHeader extends StatelessWidget {
     Color color;
     String label;
     switch (signal) {
-      case SignalAspect.green: color = AppColors.success; label = 'Clear'; break;
-      case SignalAspect.yellow: color = AppColors.warning; label = 'Restricted'; break;
-      case SignalAspect.red: color = AppColors.error; label = 'Halt'; break;
-      case SignalAspect.restricted: color = Colors.orange; label = 'Slow'; break;
+      case SignalAspect.green:
+        color = AppColors.success;
+        label = 'Clear';
+        break;
+      case SignalAspect.yellow:
+        color = AppColors.warning;
+        label = 'Restricted';
+        break;
+      case SignalAspect.red:
+        color = AppColors.error;
+        label = 'Halt';
+        break;
+      case SignalAspect.restricted:
+        color = Colors.orange;
+        label = 'Slow';
+        break;
     }
 
     return Container(
@@ -90,9 +127,20 @@ class TrackingHeader extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(width: 8, height: 8, decoration: BoxDecoration(color: color, shape: BoxShape.circle)),
+          Container(
+            width: 8,
+            height: 8,
+            decoration: BoxDecoration(color: color, shape: BoxShape.circle),
+          ),
           const SizedBox(width: 8),
-          Text(label, style: TextStyle(color: color, fontWeight: FontWeight.bold, fontSize: 11)),
+          Text(
+            label,
+            style: TextStyle(
+              color: color,
+              fontWeight: FontWeight.bold,
+              fontSize: 11,
+            ),
+          ),
         ],
       ),
     );
@@ -101,12 +149,26 @@ class TrackingHeader extends StatelessWidget {
   Widget _buildWeatherBanner(String condition) {
     return Container(
       padding: const EdgeInsets.all(10),
-      decoration: BoxDecoration(color: AppColors.accentBlue.withOpacity(0.05), borderRadius: BorderRadius.circular(12)),
+      decoration: BoxDecoration(
+        color: AppColors.accentBlue.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(12),
+      ),
       child: Row(
         children: [
-          const Icon(LucideIcons.cloudFog, size: 16, color: AppColors.accentBlue),
+          const Icon(
+            LucideIcons.cloudFog,
+            size: 16,
+            color: AppColors.accentBlue,
+          ),
           const SizedBox(width: 10),
-          Text('External Factor: $condition detected', style: const TextStyle(color: AppColors.accentBlue, fontSize: 11, fontWeight: FontWeight.bold)),
+          Text(
+            'External Factor: $condition detected',
+            style: const TextStyle(
+              color: AppColors.accentBlue,
+              fontSize: 11,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
@@ -117,8 +179,14 @@ class TrackingHeader extends StatelessWidget {
       children: [
         Icon(icon, color: AppColors.primary, size: 20),
         const SizedBox(height: 8),
-        Text(val, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
-        Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 10)),
+        Text(
+          val,
+          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14),
+        ),
+        Text(
+          label,
+          style: const TextStyle(color: AppColors.textSecondary, fontSize: 10),
+        ),
       ],
     );
   }
