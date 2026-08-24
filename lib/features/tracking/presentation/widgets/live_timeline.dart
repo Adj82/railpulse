@@ -63,12 +63,9 @@ class LiveTimeline extends StatelessWidget {
                     ],
                   ),
                 ),
-                // Dynamic train position along the track
                 Positioned(
                   left: 51,
-                  top:
-                      55 +
-                      (progress * 480).clamp(0, constraints.maxHeight - 150),
+                  top: (55 + (progress * 480).clamp(0, constraints.maxHeight - 150)).toDouble(),
                   child: _MovingTrainIcon(
                     speed: state is TrackingLoaded
                         ? state.telemetry.speed.toInt()
