@@ -8,117 +8,73 @@ class HomeHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        Row(
+        Container(
+          width: 50,
+          height: 50,
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(15),
+            boxShadow: [
+              BoxShadow(
+                color: AppColors.primary.withOpacity(0.3),
+                blurRadius: 10,
+                offset: const Offset(0, 5),
+              ),
+            ],
+          ),
+          child: const Icon(LucideIcons.user, color: Colors.white),
+        ),
+        const SizedBox(width: 16),
+        const Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Stack(
-              children: [
-                const CircleAvatar(
-                  radius: 26,
-                  backgroundColor: AppColors.primaryCyan,
-                  child: Icon(LucideIcons.user, color: Colors.black),
-                ),
-                Positioned(
-                  right: 2,
-                  bottom: 2,
-                  child: Container(
-                    width: 12,
-                    height: 12,
-                    decoration: BoxDecoration(
-                      color: AppColors.neonEmerald,
-                      shape: BoxShape.circle,
-                      border: Border.all(color: AppColors.backgroundDeep, width: 2),
-                      boxShadow: [
-                        BoxShadow(
-                          color: AppColors.neonEmerald.withOpacity(0.5),
-                          blurRadius: 4,
-                          spreadRadius: 1,
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-              ],
+            Text(
+              'Welcome Back,',
+              style: TextStyle(color: AppColors.textSecondary, fontSize: 14),
             ),
-            const SizedBox(width: 15),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  'Good Morning,',
-                  style: TextStyle(
-                    color: AppColors.textSecondary,
-                    fontSize: 14,
-                  ),
-                ),
-                Text(
-                  'Traveler',
-                  style: TextStyle(
-                    color: AppColors.textPrimary,
-                    fontSize: 22,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
+            Text(
+              'Alex Morgan',
+              style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
             ),
           ],
         ),
-        _NotificationBell(),
+        const Spacer(),
+        _NotificationButton(),
       ],
     );
   }
 }
 
-class _NotificationBell extends StatefulWidget {
-  @override
-  State<_NotificationBell> createState() => _NotificationBellState();
-}
-
-class _NotificationBellState extends State<_NotificationBell> with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      duration: const Duration(seconds: 2),
-      vsync: this,
-    )..repeat();
-  }
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
+class _NotificationButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Stack(
-      children: [
-        IconButton(
-          onPressed: () {},
-          icon: const Icon(LucideIcons.bell, color: AppColors.textPrimary, size: 28),
-        ),
-        Positioned(
-          right: 8,
-          top: 8,
-          child: ScaleTransition(
-            scale: Tween(begin: 0.8, end: 1.2).animate(
-              CurvedAnimation(parent: _controller, curve: Curves.easeInOut),
-            ),
+    return Container(
+      width: 45,
+      height: 45,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.black.withOpacity(0.05)),
+      ),
+      child: Stack(
+        alignment: Alignment.center,
+        children: [
+          const Icon(LucideIcons.bell, size: 20, color: AppColors.textPrimary),
+          Positioned(
+            right: 12,
+            top: 12,
             child: Container(
-              width: 10,
-              height: 10,
+              width: 8,
+              height: 8,
               decoration: const BoxDecoration(
-                color: AppColors.primaryCyan,
+                color: AppColors.error,
                 shape: BoxShape.circle,
               ),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

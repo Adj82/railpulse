@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:railpulse/core/theme/app_colors.dart';
-import 'package:railpulse/shared/widgets/glass_card.dart';
+import 'package:railpulse/core/theme/app_theme.dart';
 import 'package:railpulse/features/eta_tracking/data/services/eta_service.dart';
 import 'eta_result_screen.dart';
 
@@ -25,12 +25,8 @@ class _TrainInputScreenState extends ConsumerState<TrainInputScreen> {
 
   Future<void> _submit() async {
     final input = _controller.text.trim();
-    
-    // Validation: 5 digits
     if (input.length != 5 || int.tryParse(input) == null) {
-      setState(() {
-        _errorMessage = 'Please enter a valid 5-digit train number';
-      });
+      setState(() => _errorMessage = 'Please enter a 5-digit train number');
       return;
     }
 
@@ -40,119 +36,69 @@ class _TrainInputScreenState extends ConsumerState<TrainInputScreen> {
     });
 
     try {
-      final service = ref.read(etaServiceProvider);
-      final response = await service.fetchEta(input);
-      
+      final response = await ref.read(etaServiceProvider).fetchEta(input);
       if (!mounted) return;
-
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => EtaResultScreen(etaResponse: response),
-        ),
-      );
-    } catch (e, stack) {
-      debugPrint('Error fetching ETA: $e');
-      debugPrint('Stack trace: $stack');
-      setState(() {
-        _errorMessage = 'Error: $e';
-      });
+      Navigator.push(context, MaterialPageRoute(builder: (context) => EtaResultScreen(etaResponse: response)));
+    } catch (e) {
+      setState(() => _errorMessage = 'Failed to fetch ETA');
     } finally {
-      if (mounted) {
-        setState(() {
-          _isLoading = false;
-        });
-      }
+      if (mounted) setState(() => _isLoading = false);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: Container(
-        decoration: const BoxDecoration(
-          gradient: LinearGradient(
-            begin: Alignment.topLeft,
-            end: Alignment.bottomRight,
-            colors: [
-              AppColors.paleBlue,
-              Colors.white,
-              AppColors.lightPink,
-            ],
-          ),
-        ),
-        child: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(24.0),
-            child: Center(
-              child: ConstrainedBox(
-                constraints: const BoxConstraints(maxWidth: 400),
-                child: GlassCard(
-                  hasGlow: true,
-                  child: Column(
-                    mainAxisSize: MainAxisSize.min,
-                    children: [
-                      const Text(
-                        'Rail ETA Tracker',
-                        style: TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.softPurple,
-                        ),
-                      ),
-                      const SizedBox(height: 24),
-                      TextField(
-                        controller: _controller,
-                        keyboardType: TextInputType.number,
-                        style: const TextStyle(color: AppColors.textPrimary),
-                        decoration: InputDecoration(
-                          labelText: 'Enter Train Number',
-                          labelStyle: const TextStyle(color: AppColors.textSecondary),
-                          hintText: 'e.g. 12345',
-                          hintStyle: const TextStyle(color: AppColors.textSecondary),
-                          errorText: _errorMessage,
-                          enabledBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: AppColors.softPurple),
-                          ),
-                          focusedBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: AppColors.softPurple, width: 2),
-                          ),
-                          errorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red),
-                          ),
-                          focusedErrorBorder: const OutlineInputBorder(
-                            borderSide: BorderSide(color: Colors.red, width: 2),
-                          ),
-                        ),
-                        onSubmitted: (_) => _submit(),
-                      ),
-                      const SizedBox(height: 24),
-                      if (_isLoading)
-                        const CircularProgressIndicator(color: AppColors.softPurple)
-                      else
-                        SizedBox(
-                          width: double.infinity,
-                          child: ElevatedButton(
-                            onPressed: _submit,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: AppColors.softPurple,
-                              foregroundColor: Colors.white,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(15),
-                              ),
-                            ),
-                            child: const Padding(
-                              padding: EdgeInsets.symmetric(vertical: 16.0),
-                              child: Text(
-                                'TRACK TRAIN',
-                                style: TextStyle(fontWeight: FontWeight.bold),
-                              ),
-                            ),
-                          ),
-                        ),
-                    ],
+    return Container(
+      decoration: AppTheme.pageDecoration,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        appBar: AppBar(title: const Text('TRACKER')),
+        body: Center(
+          child: SingleChildScrollView(
+            padding: const EdgeInsets.all(32),
+            child: Container(
+              padding: const EdgeInsets.all(32),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(30),
+                boxShadow: [BoxShadow(color: AppColors.secondary.withOpacity(0.05), blurRadius: 30)],
+              ),
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  const Icon(Icons.analytics, size: 64, color: AppColors.primary),
+                  const SizedBox(height: 24),
+                  const Text('AI Predictive ETA', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+                  const SizedBox(height: 8),
+                  const Text('Enter your train number for ML-based timing predictions.', 
+                    textAlign: TextAlign.center, style: TextStyle(color: AppColors.textSecondary)),
+                  const SizedBox(height: 32),
+                  TextField(
+                    controller: _controller,
+                    keyboardType: TextInputType.number,
+                    decoration: InputDecoration(
+                      labelText: 'Train Number',
+                      hintText: 'e.g. 12345',
+                      errorText: _errorMessage,
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(15)),
+                    ),
                   ),
-                ),
+                  const SizedBox(height: 24),
+                  SizedBox(
+                    width: double.infinity,
+                    height: 55,
+                    child: ElevatedButton(
+                      onPressed: _isLoading ? null : _submit,
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: AppColors.primary,
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15)),
+                      ),
+                      child: _isLoading 
+                        ? const CircularProgressIndicator(color: Colors.white)
+                        : const Text('GET PROJECTIONS', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                    ),
+                  ),
+                ],
               ),
             ),
           ),

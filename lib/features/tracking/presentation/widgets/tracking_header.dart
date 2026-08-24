@@ -1,48 +1,55 @@
 import 'package:flutter/material.dart';
 import 'package:lucide_icons_flutter/lucide_icons.dart';
 import 'package:railpulse/core/theme/app_colors.dart';
-import 'package:railpulse/shared/widgets/glass_card.dart';
 
 class TrackingHeader extends StatelessWidget {
   const TrackingHeader({super.key});
 
   @override
   Widget build(BuildContext context) {
-    return GlassCard(
-      hasGlow: true,
+    return Container(
+      padding: const EdgeInsets.all(24),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(25),
+        boxShadow: [
+          BoxShadow(color: AppColors.secondary.withOpacity(0.05), blurRadius: 20, offset: const Offset(0, 10)),
+        ],
+      ),
       child: Column(
         children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    '12951 • RAJDHANI EXP',
-                    style: TextStyle(
-                      color: AppColors.primaryCyan,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.2,
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    const Text(
+                      '12951 • RAJDHANI EXP',
+                      style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18, letterSpacing: 1),
+                      overflow: TextOverflow.ellipsis,
                     ),
-                  ),
-                  const SizedBox(height: 4),
-                  Text(
-                    'NDLS to Mumbai Central',
-                    style: TextStyle(color: AppColors.textSecondary, fontSize: 12),
-                  ),
-                ],
+                    const SizedBox(height: 4),
+                    const Text(
+                      'NDLS → Mumbai Central',
+                      style: TextStyle(color: AppColors.textSecondary, fontSize: 13),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(width: 12),
               _buildDelayBadge(),
             ],
           ),
-          const SizedBox(height: 20),
+          const SizedBox(height: 24),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
-              _buildStatItem(LucideIcons.gauge, '110 km/h', 'Current Speed'),
-              _buildStatItem(LucideIcons.mapPin, 'KOTA JN', 'Next Station'),
-              _buildStatItem(LucideIcons.clock, '15 mins', 'ML Delay'),
+              _buildStat(LucideIcons.gauge, '110 km/h', 'Speed'),
+              _buildStat(LucideIcons.mapPin, 'KOTA JN', 'Next'),
+              _buildStat(LucideIcons.clock, '15m Delay', 'ML Status'),
             ],
           ),
         ],
@@ -52,26 +59,22 @@ class TrackingHeader extends StatelessWidget {
 
   Widget _buildDelayBadge() {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 4),
+      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.sunsetGold.withOpacity(0.15),
-        borderRadius: BorderRadius.circular(8),
-        border: Border.all(color: AppColors.sunsetGold.withOpacity(0.5)),
+        color: AppColors.warning.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(10),
       ),
-      child: const Text(
-        '+15m Delay',
-        style: TextStyle(color: AppColors.sunsetGold, fontSize: 10, fontWeight: FontWeight.bold),
-      ),
+      child: const Text('Delayed', style: TextStyle(color: AppColors.warning, fontWeight: FontWeight.bold, fontSize: 12)),
     );
   }
 
-  Widget _buildStatItem(IconData icon, String value, String label) {
+  Widget _buildStat(IconData icon, String val, String label) {
     return Column(
       children: [
-        Icon(icon, color: AppColors.primaryCyan, size: 20),
+        Icon(icon, color: AppColors.primary, size: 20),
         const SizedBox(height: 8),
-        Text(value, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 16)),
-        Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 10)),
+        Text(val, style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 14)),
+        Text(label, style: const TextStyle(color: AppColors.textSecondary, fontSize: 11)),
       ],
     );
   }

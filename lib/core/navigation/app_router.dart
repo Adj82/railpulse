@@ -3,7 +3,6 @@ import 'package:go_router/go_router.dart';
 import 'package:railpulse/core/navigation/navigation_shell.dart';
 import 'package:railpulse/features/home/presentation/home_screen.dart';
 import 'package:railpulse/features/map/presentation/map_screen.dart';
-import 'package:railpulse/features/booking/presentation/booking_screen.dart';
 import 'package:railpulse/features/insights/presentation/insights_screen.dart';
 import 'package:railpulse/features/tracking/presentation/train_tracking_screen.dart';
 import 'package:railpulse/features/eta_tracking/presentation/screens/train_input_screen.dart';
@@ -28,10 +27,6 @@ final appRouter = GoRouter(
         GoRoute(
           path: '/map',
           builder: (context, state) => const MapScreen(),
-        ),
-        GoRoute(
-          path: '/booking',
-          builder: (context, state) => const BookingScreen(),
         ),
         GoRoute(
           path: '/insights',

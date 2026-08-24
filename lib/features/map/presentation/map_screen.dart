@@ -9,11 +9,12 @@ class MapScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: const Text('NETWORK MAP')),
       body: Stack(
         children: [
           FlutterMap(
-            options: MapOptions(
-              initialCenter: LatLng(28.6139, 77.2090), // New Delhi
+            options: const MapOptions(
+              initialCenter: LatLng(28.6139, 77.2090),
               initialZoom: 11.0,
             ),
             children: [
@@ -24,79 +25,33 @@ class MapScreen extends StatelessWidget {
               MarkerLayer(
                 markers: [
                   Marker(
-                    point: LatLng(28.6139, 77.2090),
-                    width: 80,
-                    height: 80,
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: AppColors.softPurple,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Text('NDLS', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
-                        ),
-                        const Icon(Icons.location_on, color: AppColors.softPurple, size: 30),
-                      ],
-                    ),
-                  ),
-                  Marker(
-                    point: LatLng(28.6675, 77.4497), // Ghaziabad
-                    width: 80,
-                    height: 80,
-                    child: Column(
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(4),
-                          decoration: BoxDecoration(
-                            color: AppColors.softPink,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: const Text('GZB', style: TextStyle(color: Colors.white, fontSize: 10, fontWeight: FontWeight.bold)),
-                        ),
-                        const Icon(Icons.location_on, color: AppColors.softPink, size: 30),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
-              PolylineLayer(
-                polylines: [
-                  Polyline(
-                    points: [
-                      LatLng(28.6139, 77.2090),
-                      LatLng(28.6675, 77.4497),
-                    ],
-                    color: AppColors.softPurple,
-                    strokeWidth: 4,
+                    point: const LatLng(28.6139, 77.2090),
+                    width: 60,
+                    height: 60,
+                    child: const Icon(Icons.location_on, color: AppColors.primary, size: 40),
                   ),
                 ],
               ),
             ],
           ),
-          SafeArea(
-            child: Padding(
-              padding: const EdgeInsets.all(20.0),
-              child: Column(
+          Positioned(
+            top: 24,
+            left: 24,
+            right: 24,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 15),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(15),
+                boxShadow: [
+                  BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10, offset: const Offset(0, 5)),
+                ],
+              ),
+              child: const Row(
                 children: [
-                  Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-                    decoration: BoxDecoration(
-                      color: Colors.white.withOpacity(0.9),
-                      borderRadius: BorderRadius.circular(15),
-                      boxShadow: [
-                        BoxShadow(color: Colors.black.withOpacity(0.1), blurRadius: 10),
-                      ],
-                    ),
-                    child: const Row(
-                      children: [
-                        Icon(Icons.search, color: AppColors.textSecondary),
-                        SizedBox(width: 10),
-                        const Text('Search station or route...', style: TextStyle(color: AppColors.textSecondary)),
-                      ],
-                    ),
-                  ),
+                  Icon(Icons.search, color: AppColors.textSecondary, size: 20),
+                  SizedBox(width: 12),
+                  Text('Search for stations...', style: TextStyle(color: AppColors.textSecondary)),
                 ],
               ),
             ),
